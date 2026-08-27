@@ -161,6 +161,7 @@ def main(
     as_of: date | None = None,
 ) -> None:
     as_of = as_of or date.today()
+    print("as_of:{as_of}")
     events = load_table(spark, events_table)
     revenue = load_table(spark, revenue_table)
     features = build_features(events, revenue, as_of=as_of)
