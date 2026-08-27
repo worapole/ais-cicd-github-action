@@ -1,0 +1,18 @@
+# E9 - running a real tool, and what it finds in a Databricks repository.
+#
+# THIS WORKFLOW IS EXPECTED TO FAIL on a Databricks repository as written.
+# ruff reports F821 for spark/dbutils/display (injected by the runtime, not
+# imported) and E402 for imports after a "# MAGIC" or "# COMMAND ----" header.
+# Neither is a bug. The fix is a committed configuration file, not a flag on
+# this line - see ../ruff.toml, which is what slide 51 arrives at.
+name: E9 Lint
+on: [push, workflow_dispatch]
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Lint the Python
+        run: |
+          pip install --quiet ruff==0.6.9
+          ruff check --output-format=concise src tests
