@@ -33,7 +33,7 @@ jobs:
 
           databricks workspace mkdirs "$WORKSPACE_DIR"
           databricks workspace import "$WORKSPACE_DIR/build_rfm" \
-            --file notebooks/build_rfm.py \
+            --file src/build_rfm.py \
             --format SOURCE --language PYTHON --overwrite
 
           databricks jobs submit -o json --json "{
