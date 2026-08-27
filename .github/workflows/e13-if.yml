@@ -1,0 +1,20 @@
+# E13 — the same file behaves differently depending on the context.
+name: E13 Conditions
+on: [push, pull_request, workflow_dispatch]
+jobs:
+  decide:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Always
+        run: |
+          echo "event = ${{ github.event_name }}"
+          echo "ref   = ${{ github.ref }}"
+      - name: Only on a pull request
+        if: github.event_name == 'pull_request'
+        run: echo "this is a pull request"
+      - name: Only on the default branch
+        if: github.ref == 'refs/heads/main'
+        run: echo "this is main"
+      - name: Only when started by hand
+        if: github.event_name == 'workflow_dispatch'
+        run: echo "somebody pressed the button"
